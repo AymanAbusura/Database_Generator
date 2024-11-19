@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Global Database Generator
 
 A simple web app that generates a list of user data (including names, email addresses, and phone numbers) based on a selected country and number of records. The app leverages the faker-js library to create random data and libphonenumber-js to generate valid phone numbers for different countries.
 
