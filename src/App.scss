@@ -103,7 +103,7 @@ $border-color: #ccc;
       thead {
         th {
           border-bottom: 2px solid $border-color;
-          text-align: left;
+          text-align: center;
           padding: 8px;
         }
       }
@@ -120,6 +120,7 @@ $border-color: #ccc;
 
           td {
             padding: 8px;
+            text-align: center;
           }
         }
       }
