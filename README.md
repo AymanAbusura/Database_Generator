@@ -42,6 +42,13 @@ The app will now be running on `http://localhost:3000`.
 3. Generate Data: Click the "Generate" button to generate random user data.
 4. Download Data: After generating the data, click the "Download JSON" button to download the data as a JSON file.
 
+### Screenshots
+Main UI:
+<img width="692" alt="Main-UI" src="https://github.com/user-attachments/assets/83eadafd-1303-48dd-b16f-51a523c23134">
+
+Generated Data Table:
+<img width="1471" alt="table" src="https://github.com/user-attachments/assets/c6ccbeee-74f4-4c8f-af65-2a88d3057cce">
+
 ### Contributing
 Feel free to open an issue or create a pull request if you have any suggestions or improvements for this project.
 
