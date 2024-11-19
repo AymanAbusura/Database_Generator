@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from "react";
 import { faker } from "@faker-js/faker";
 import {
@@ -6,8 +8,8 @@ import {
   getCountries,
   getCountryCallingCode,
 } from "libphonenumber-js";
-
 import "./App.scss";
+import 'font-awesome/css/font-awesome.min.css';
 
 const App = () => {
   const [country, setCountry] = useState("US");
@@ -15,6 +17,9 @@ const App = () => {
   const [error, setError] = useState("");
   const [count, setCount] = useState(0);
   const [showTable, setShowTable] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [filteredCountries, setFilteredCountries] = useState([]);
+  const [filterKey, setFilterKey] = useState("");
 
   const getFlagEmoji = (countryCode) =>
     countryCode
@@ -32,15 +37,44 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    setData([]);
-    setShowTable(false);
-    setError("");
-    setCount(0);
-  }, [country]);
+    if (!isDropdownOpen) {
+      setFilteredCountries(countries);
+    }
+  }, [country, isDropdownOpen]);
 
   const handleCountryChange = (newCountry) => {
     setCountry(newCountry);
+    setIsDropdownOpen(false);
   };
+
+  const handleKeyDown = (e) => {
+    const typedKey = e.key.toLowerCase();
+
+    if (!isDropdownOpen) return;
+
+    if (typedKey >= "a" && typedKey <= "z") {
+      setFilterKey(typedKey);
+      setFilteredCountries(
+        countries.filter((country) =>
+          country.name.toLowerCase().startsWith(typedKey)
+        )
+      );
+    } else if (e.key === "Escape") {
+      setIsDropdownOpen(false);
+    } else if (e.key === "Enter" || e.key === "ArrowDown" || e.key === "ArrowUp") {
+    } else if (typedKey === "") {
+      setFilterKey("");
+      setFilteredCountries(countries);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [countries, isDropdownOpen]);
 
   const generatePhoneNumber = (countryCode) => {
     const callingCode = getCountryCallingCode(countryCode);
@@ -85,6 +119,7 @@ const App = () => {
   const clearData = () => {
     setData([]);
     setShowTable(false);
+    setCountry("US");
     setCount(0);
   };
 
@@ -104,16 +139,38 @@ const App = () => {
   return (
     <div className="container">
       <h1 className="title">🌍 Global Database Generator</h1>
-      
+
       <div className="input-group">
-        <label htmlFor="country" className="label">Select Country:</label>
-        <select id="country" value={country} onChange={(e) => handleCountryChange(e.target.value)} className="select">
-          {countries.map(({ code, name, flag }) => (
-            <option key={code} value={code}>
-              {flag} {name} ({code})
-            </option>
-          ))}
-        </select>
+        <label className="label">Select Country:</label>
+        <div
+          className="custom-dropdown"
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        >
+          <div className="selected-country">
+            {countries.find(({ code }) => code === country)?.flag}{" "}
+            {countries.find(({ code }) => code === country)?.name} ({country})
+            <span className="dropdown-arrow">
+              {isDropdownOpen ? (
+                <i className="fa fa-chevron-up"></i>
+              ) : (
+                <i className="fa fa-chevron-down"></i>
+              )}
+            </span>
+          </div>
+          {isDropdownOpen && (
+            <div className="dropdown-menu">
+              {filteredCountries.map(({ code, name, flag }) => (
+                <div
+                  key={code}
+                  className="dropdown-item"
+                  onClick={() => handleCountryChange(code)}
+                >
+                  {flag} {name} ({code})
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="input-group">
