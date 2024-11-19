@@ -1,0 +1,128 @@
+$primary-color: #007bff;
+$danger-color: #dc3545;
+$success-color: #28a745;
+$text-color: #333;
+$background-color: #f9f9f9;
+$border-color: #ccc;
+
+.container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: $background-color;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .title {
+    color: $text-color;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .input-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+
+    .label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .input,
+    .select {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid $border-color;
+      border-radius: 4px;
+    }
+  }
+
+  .button-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    .button,
+    .clear-button {
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #fff;
+      font-weight: bold;
+
+      &.button {
+        background-color: $primary-color;
+
+        &:hover {
+          background-color: darken($primary-color, 10%);
+        }
+      }
+
+      &.clear-button {
+        background-color: $danger-color;
+
+        &:hover {
+          background-color: darken($danger-color, 10%);
+        }
+      }
+    }
+  }
+
+  .error {
+    color: red;
+    margin-bottom: 15px;
+  }
+
+  .table-container {
+    margin-top: 20px;
+    width: 80%;
+
+    .download-button {
+      background-color: $success-color;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 15px;
+
+      &:hover {
+        background-color: darken($success-color, 10%);
+      }
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+      thead {
+        th {
+          border-bottom: 2px solid $border-color;
+          text-align: left;
+          padding: 8px;
+        }
+      }
+
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: #f2f2f2;
+          }
+
+          &:nth-child(odd) {
+            background-color: #fff;
+          }
+
+          td {
+            padding: 8px;
+          }
+        }
+      }
+    }
+  }
+}
